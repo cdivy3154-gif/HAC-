@@ -1,0 +1,204 @@
+.landing {
+  position: relative;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: var(--space-6);
+}
+
+/* ─── Hero Section ──────────────────────────────── */
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-8);
+  z-index: var(--z-base);
+  max-width: 800px;
+  width: 100%;
+}
+
+/* ─── Logo ──────────────────────────────────────── */
+.logoWrapper {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+  animation: fadeInScale var(--duration-slower) var(--ease-out-expo) forwards;
+}
+
+.logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: drop-shadow(0 0 30px rgba(59, 234, 126, 0.3));
+}
+
+/* ─── Title ─────────────────────────────────────── */
+.title {
+  font-family: var(--font-display);
+  font-size: var(--text-hero);
+  font-weight: 900;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--leading-none);
+  animation: fadeInUp var(--duration-slower) var(--ease-out-expo) 0.1s both;
+}
+
+.titleGreen {
+  color: var(--green-400);
+  text-shadow: var(--green-glow-text);
+}
+
+.titleMuted {
+  color: var(--text-secondary);
+}
+
+/* ─── Subtitle ──────────────────────────────────── */
+.subtitle {
+  font-family: var(--font-mono);
+  font-size: var(--text-lg);
+  color: var(--text-secondary);
+  max-width: 500px;
+  line-height: var(--leading-relaxed);
+  animation: fadeInUp var(--duration-slower) var(--ease-out-expo) 0.2s both;
+}
+
+.subtitlePrompt {
+  color: var(--green-400);
+}
+
+/* ─── CTA Buttons ───────────────────────────────── */
+.ctaGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  justify-content: center;
+  animation: fadeInUp var(--duration-slower) var(--ease-out-expo) 0.3s both;
+}
+
+.ctaPrimary {
+  font-size: var(--text-base);
+  padding: var(--space-4) var(--space-8);
+  border-radius: var(--radius-lg);
+  font-weight: 700;
+  letter-spacing: var(--tracking-wide);
+}
+
+.ctaSecondary {
+  font-size: var(--text-base);
+  padding: var(--space-4) var(--space-8);
+  border-radius: var(--radius-lg);
+}
+
+/* ─── Feature Pills ─────────────────────────────── */
+.featurePills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  justify-content: center;
+  animation: fadeInUp var(--duration-slower) var(--ease-out-expo) 0.4s both;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+  background: var(--bg-glass);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-full);
+  transition: all var(--duration-normal) var(--ease-in-out);
+}
+
+.pill:hover {
+  border-color: var(--border-green);
+  color: var(--green-400);
+  box-shadow: var(--green-glow-sm);
+}
+
+.pillIcon {
+  font-size: var(--text-sm);
+}
+
+/* ─── Code Rain Background ─────────────────────── */
+.codeRain {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.codeRainCol {
+  position: absolute;
+  top: -100%;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--green-400);
+  opacity: 0.04;
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  animation: codeRain linear infinite;
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* ─── Bottom tagline ────────────────────────────── */
+.tagline {
+  position: absolute;
+  bottom: var(--space-8);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  animation: fadeInUp var(--duration-slower) var(--ease-out-expo) 0.5s both;
+}
+
+.taglineGreen {
+  color: var(--green-500);
+}
+
+/* ─── Responsive ────────────────────────────────── */
+@media (max-width: 640px) {
+  .logoWrapper {
+    width: 140px;
+    height: 140px;
+  }
+
+  .title {
+    font-size: var(--text-4xl);
+  }
+
+  .subtitle {
+    font-size: var(--text-base);
+  }
+
+  .ctaPrimary,
+  .ctaSecondary {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .featurePills {
+    gap: var(--space-2);
+  }
+
+  .pill {
+    font-size: 10px;
+    padding: var(--space-1) var(--space-3);
+  }
+}
+
+@media (min-width: 641px) and (max-width: 1024px) {
+  .logoWrapper {
+    width: 170px;
+    height: 170px;
+  }
+}

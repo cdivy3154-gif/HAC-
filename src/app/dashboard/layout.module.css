@@ -1,0 +1,90 @@
+/* ═══════════════════════════════════════════════════════════════
+   Dashboard Layout — Shell Styles
+   ═══════════════════════════════════════════════════════════════ */
+
+.dashboardWrapper {
+  display: flex;
+  min-height: 100dvh;
+  background: var(--bg-base);
+}
+
+.mainArea {
+  flex: 1;
+  margin-left: var(--sidebar-width);
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+  transition: margin-left 300ms var(--ease-out-expo);
+}
+
+/* When sidebar is collapsed, JS toggles a class but for now
+   we rely on the sidebar's fixed positioning. The margin adjusts
+   based on the sidebar width via CSS var. */
+
+.content {
+  flex: 1;
+  padding: var(--space-6);
+  overflow-y: auto;
+}
+
+/* ─── Loading Screen ───────────────────────────────────────── */
+.loadingScreen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100dvh;
+  background: var(--bg-base);
+}
+
+.loadingContent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.loaderIcon {
+  font-size: 3rem;
+  animation: horseFloat 2s ease-in-out infinite;
+}
+
+@keyframes horseFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.loadingText {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  letter-spacing: var(--tracking-wide);
+}
+
+.blinkCursor {
+  color: var(--green-400);
+  animation: cursorBlink 1s step-end infinite;
+}
+
+@keyframes cursorBlink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* ─── Responsive ───────────────────────────────────────────── */
+@media (max-width: 1023px) {
+  .mainArea {
+    margin-left: 0;
+  }
+
+  .content {
+    padding: var(--space-4);
+    padding-bottom: calc(var(--bottom-nav-height) + var(--space-4));
+  }
+}
+
+@media (max-width: 480px) {
+  .content {
+    padding: var(--space-3);
+    padding-bottom: calc(var(--bottom-nav-height) + var(--space-3));
+  }
+}

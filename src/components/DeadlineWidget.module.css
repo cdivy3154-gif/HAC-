@@ -1,0 +1,192 @@
+/* ═══════════════════════════════════════════════════════════════
+   DeadlineWidget — Countdown Timer List
+   ═══════════════════════════════════════════════════════════════ */
+
+.widget {
+  background: var(--bg-glass);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  transition: border-color 200ms var(--ease-in-out);
+}
+
+.widget:hover {
+  border-color: var(--border-strong);
+}
+
+/* ─── Header ───────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.headerIcon {
+  font-size: 1.25rem;
+}
+
+.headerTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+/* ─── List ─────────────────────────────────────────────────── */
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.item:first-child {
+  padding-top: 0;
+}
+
+.itemLeft {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  min-width: 0;
+  flex: 1;
+}
+
+.urgencyDot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.urgencyDot.safe {
+  background: var(--green-400);
+  box-shadow: 0 0 6px rgba(59, 234, 126, 0.4);
+}
+
+.urgencyDot.warning {
+  background: var(--gold-400);
+  box-shadow: 0 0 6px rgba(201, 148, 58, 0.4);
+}
+
+.urgencyDot.critical {
+  background: var(--color-error);
+  box-shadow: 0 0 6px rgba(232, 84, 84, 0.4);
+  animation: criticalPulse 1.5s ease-in-out infinite;
+}
+
+.urgencyDot.ended {
+  background: var(--text-muted);
+}
+
+@keyframes criticalPulse {
+  0%, 100% { box-shadow: 0 0 4px rgba(232, 84, 84, 0.3); }
+  50% { box-shadow: 0 0 12px rgba(232, 84, 84, 0.7); }
+}
+
+.itemInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.itemTitle {
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.itemDeadline {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+/* ─── Countdown ────────────────────────────────────────────── */
+.countdown {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  flex-shrink: 0;
+  letter-spacing: 0.03em;
+}
+
+.countdown.safe {
+  background: var(--bg-green-subtle);
+  color: var(--green-400);
+  border: 1px solid var(--border-green);
+}
+
+.countdown.warning {
+  background: var(--bg-gold-subtle);
+  color: var(--gold-400);
+  border: 1px solid var(--border-gold);
+}
+
+.countdown.critical {
+  background: rgba(232, 84, 84, 0.1);
+  color: var(--color-error);
+  border: 1px solid rgba(232, 84, 84, 0.3);
+  animation: criticalGlow 1.5s ease-in-out infinite;
+}
+
+.countdown.ended {
+  background: var(--bg-hover);
+  color: var(--text-muted);
+  border: 1px solid var(--border-subtle);
+}
+
+@keyframes criticalGlow {
+  0%, 100% { box-shadow: none; }
+  50% { box-shadow: 0 0 8px rgba(232, 84, 84, 0.3); }
+}
+
+/* ─── Empty State ──────────────────────────────────────────── */
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-8) 0;
+  text-align: center;
+}
+
+.emptyIcon {
+  font-size: 2rem;
+  opacity: 0.5;
+}
+
+.emptyText {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  font-style: italic;
+}

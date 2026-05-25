@@ -1,0 +1,249 @@
+/* ═══════════════════════════════════════════════════════════════
+   Onboarding Screen Styles
+   ═══════════════════════════════════════════════════════════════ */
+
+.onboardingPage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  width: 100%;
+  background: var(--bg-base);
+  color: var(--text-primary);
+  overflow: hidden;
+}
+
+/* ─── Code Rain Background (Muted for readability) ──────────── */
+.codeRain {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.04; /* Extra low opacity for clean text reading */
+}
+
+.codeRainCol {
+  position: absolute;
+  top: -20%;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--green-400);
+  writing-mode: vertical-rl;
+  text-orientation: upright;
+  white-space: nowrap;
+  animation: codeRainFall linear infinite;
+}
+
+@keyframes codeRainFall {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(120vh); }
+}
+
+/* ─── Header ────────────────────────────────────────────────── */
+.header {
+  position: relative;
+  z-index: var(--z-base);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-4) var(--space-8);
+  background: var(--bg-glass);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid var(--border-default);
+  flex-shrink: 0;
+}
+
+.headerMascot {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.headerTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 800;
+  color: var(--green-400);
+  text-shadow: 0 0 10px rgba(59, 234, 126, 0.2);
+}
+
+/* Onboarding Progress Indicators */
+.progressContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  width: 220px;
+}
+
+.progressLabel {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-2);
+}
+
+.shieldIcon {
+  font-size: var(--text-sm);
+}
+
+.progressText {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-secondary);
+  letter-spacing: var(--tracking-wider);
+}
+
+.progressBarWrapper {
+  height: 6px;
+  background: var(--charcoal-700);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  border: 1px solid var(--border-subtle);
+}
+
+.progressBar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--green-500), var(--green-400));
+  border-radius: var(--radius-full);
+  box-shadow: var(--green-glow-sm);
+  transition: width var(--duration-slow) var(--ease-out-expo);
+}
+
+/* ─── Chat Log Section ──────────────────────────────────────── */
+.chatLogSection {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-6) var(--space-8);
+  position: relative;
+  z-index: var(--z-base);
+  scroll-behavior: smooth;
+}
+
+.chatLogSection::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chatLogSection::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chatLogSection::-webkit-scrollbar-thumb {
+  background: var(--charcoal-700);
+  border-radius: var(--radius-full);
+}
+
+.chatLogSection::-webkit-scrollbar-thumb:hover {
+  background: var(--charcoal-600);
+}
+
+.messagesContainer {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: var(--space-8);
+}
+
+/* Typing indicator bubble style */
+.typingIndicator {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+  margin-bottom: var(--space-6);
+  animation: typingFadeIn var(--duration-fast) var(--ease-out-expo);
+}
+
+.typingText {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+}
+
+.blinkingCursor {
+  color: var(--green-400);
+  animation: cursorBlink 1s step-end infinite;
+}
+
+/* ─── Footer / Input area ───────────────────────────────────── */
+.footerInputSection {
+  position: relative;
+  z-index: var(--z-base);
+  background: var(--bg-glass);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border-top: 1px solid var(--border-default);
+  padding: var(--space-4) var(--space-8);
+  flex-shrink: 0;
+}
+
+.inputConstraint {
+  max-width: 800px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ─── Loading Screen ────────────────────────────────────────── */
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100dvh;
+  width: 100%;
+  background: var(--bg-base);
+  gap: var(--space-4);
+}
+
+.loaderIcon {
+  font-size: 48px;
+  animation: pulseLogo 2s infinite ease-in-out;
+}
+
+.loadingText {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  color: var(--green-400);
+  text-shadow: 0 0 8px rgba(59, 234, 126, 0.3);
+}
+
+/* ─── Animations ────────────────────────────────────────────── */
+@keyframes typingFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cursorBlink {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 1; }
+}
+
+@keyframes pulseLogo {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 10px rgba(59, 234, 126, 0.2)); }
+  50% { transform: scale(1.1); filter: drop-shadow(0 0 25px rgba(59, 234, 126, 0.5)); }
+}
+
+/* ─── Responsive Breakdown ──────────────────────────────────── */
+@media (max-width: 768px) {
+  .header {
+    padding: var(--space-3) var(--space-4);
+  }
+
+  .headerTitle {
+    font-size: var(--text-base);
+  }
+
+  .progressContainer {
+    width: 130px;
+  }
+
+  .chatLogSection {
+    padding: var(--space-4) var(--space-4);
+  }
+
+  .footerInputSection {
+    padding: var(--space-3) var(--space-4);
+  }
+}
