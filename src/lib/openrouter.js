@@ -124,3 +124,94 @@ Double check that you ALWAYS output valid JSON matching this schema and nothing 
     };
   }
 }
+
+
+/**
+ * Calls NVIDIA NIM API to get HAC's reply for the persistent in-app chat.
+ * This is the general-purpose chat (not onboarding). HAC is context-aware
+ * and can answer questions about hackathons, give advice, etc.
+ *
+ * @param {Array<{role: string, content: string}>} messages - Chat history
+ * @param {object} [userProfile] - Optional user profile for context
+ * @returns {Promise<{reply: string}>}
+ */
+export async function getHacChatResponse(messages, userProfile = null) {
+  const apiKey = process.env.NVIDIA_API_KEY;
+  const model = process.env.NVIDIA_MODEL || DEFAULT_MODEL;
+
+  if (!apiKey) {
+    console.warn("[HAC] NVIDIA_API_KEY is not configured. Returning mock response.");
+    const lastUserMessage = messages.filter(m => m.role === "user").pop()?.content || "";
+
+    return {
+      reply: `[DEMO MODE 🐴] You said: "${lastUserMessage}". My brain (NVIDIA_API_KEY) isn't plugged in yet! Add your API key to .env.local. For now, here's a free tip: the best hackathon project is the one that WORKS during the demo. Revolutionary, I know. 😏`,
+    };
+  }
+
+  let contextBlock = "";
+  if (userProfile) {
+    contextBlock = `\n\nCurrent user context:
+- Name: ${userProfile.display_name || "Unknown"}
+- Skills: ${userProfile.skills?.join(", ") || "Unknown"}
+- Interests: ${userProfile.interests?.join(", ") || "Unknown"}
+- Experience: ${userProfile.experience_level || "Unknown"}
+- Team preference: ${userProfile.team_preference || "Unknown"}`;
+  }
+
+  const systemPrompt = `You are HAC 🐴, a witty, cheeky, slightly edgy tech-savvy horse mascot. You are the AI assistant inside HAC — the ultimate hackathon finder app.
+
+Your personality: Deadpool-lite meets Silicon Valley bro. You use horse puns sparingly, roast gently, and give genuinely helpful advice with swagger. Keep responses concise (2-4 sentences usually, unless the user asks for detail).
+
+You help users with:
+- Hackathon advice (prep, pitching, team building, winning strategies)
+- Technical guidance (what to build, what stack to use)
+- Motivation and encouragement (with your trademark snark)
+- Questions about the HAC app itself
+- General coding/tech chat
+
+Rules:
+- Stay in character as HAC the horse mascot at all times
+- Be helpful but entertaining — never boring
+- If asked something outside your scope, deflect with humor
+- Use emoji sparingly (1-2 per message max)
+- Format responses as plain text, no JSON wrapper
+- You can use **bold** and \`code\` markdown${contextBlock}`;
+
+  try {
+    const response = await fetch("https://integrate.api.nvidia.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${apiKey}`,
+        "Accept": "application/json",
+      },
+      body: JSON.stringify({
+        model,
+        messages: [
+          { role: "system", content: systemPrompt },
+          ...messages.slice(-20), // Keep last 20 messages for context
+        ],
+        temperature: 0.8,
+        max_tokens: 500,
+      }),
+    });
+
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`NVIDIA API error: ${response.status} - ${errorText}`);
+    }
+
+    const data = await response.json();
+    const content = data.choices?.[0]?.message?.content;
+
+    return {
+      reply: content || "Neigh! My brain glitched. Try again? 🐴",
+    };
+  } catch (error) {
+    console.error("[HAC] Chat completion error:", error);
+    return {
+      reply: `Stable connection lost! 🐴 Error: "${error.message}". Give me a sec and try again.`,
+    };
+  }
+}
+

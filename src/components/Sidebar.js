@@ -8,10 +8,10 @@ import styles from "./Sidebar.module.css";
 
 const NAV_ITEMS = [
   { icon: "🏠", label: "Dashboard", href: "/dashboard", enabled: true },
-  { icon: "🔍", label: "Hackathons", href: "/dashboard/hackathons", enabled: false },
-  { icon: "👥", label: "Teams", href: "/dashboard/teams", enabled: false },
-  { icon: "💬", label: "Chat", href: "/dashboard/chat", enabled: false },
-  { icon: "📅", label: "Calendar", href: "/dashboard/calendar", enabled: false },
+  { icon: "🔍", label: "Hackathons", href: "/dashboard/hackathons", enabled: true },
+  { icon: "👥", label: "Teams", href: "/dashboard/teams", enabled: true },
+  { icon: "💬", label: "Chat", href: "/dashboard/chat", enabled: true },
+  { icon: "📅", label: "Calendar", href: "/dashboard/calendar", enabled: true },
 ];
 
 const SECONDARY_ITEMS = [

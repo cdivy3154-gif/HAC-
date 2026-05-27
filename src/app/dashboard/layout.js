@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { getSupabaseBrowserClient } from "@/lib/supabase/client";
 import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/Navbar";
+import ChatWidget from "@/components/ChatWidget";
 import styles from "./layout.module.css";
 
 /**
@@ -81,6 +82,7 @@ export default function DashboardLayout({ children }) {
         <Navbar user={profile} />
         <main className={styles.content}>{children}</main>
       </div>
+      <ChatWidget />
     </div>
   );
 }

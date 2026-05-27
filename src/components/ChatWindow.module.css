@@ -1,0 +1,169 @@
+/* ═══════════════════════════════════════════════════════════════
+   ChatWindow — Reusable Terminal Chat Interface
+   ═══════════════════════════════════════════════════════════════ */
+
+.chatWindow {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+/* ─── Header ───────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border-default);
+  flex-shrink: 0;
+}
+
+.headerInfo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background: var(--green-400);
+  box-shadow: 0 0 6px rgba(59, 234, 126, 0.5);
+  animation: statusPulse 2s infinite;
+}
+
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.headerTitle {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--green-400);
+  letter-spacing: 0.03em;
+}
+
+.headerMeta {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+/* ─── Messages Area ────────────────────────────────────────── */
+.messagesArea {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  scroll-behavior: smooth;
+}
+
+.messagesArea::-webkit-scrollbar { width: 4px; }
+.messagesArea::-webkit-scrollbar-track { background: transparent; }
+.messagesArea::-webkit-scrollbar-thumb {
+  background: var(--border-default);
+  border-radius: 2px;
+}
+
+/* ─── Loading State ────────────────────────────────────────── */
+.loadingState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-8) 0;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+}
+
+.loadingDots {
+  display: flex;
+  gap: 4px;
+  font-size: var(--text-xl);
+  color: var(--green-400);
+}
+
+.loadingDots span {
+  animation: loadDot 1.2s infinite;
+}
+.loadingDots span:nth-child(2) { animation-delay: 0.2s; }
+.loadingDots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes loadDot {
+  0%, 60%, 100% { opacity: 0.2; transform: translateY(0); }
+  30% { opacity: 1; transform: translateY(-4px); }
+}
+
+/* ─── Typing Indicator ─────────────────────────────────────── */
+.typingIndicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-glass);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  align-self: flex-start;
+  max-width: 200px;
+}
+
+.typingDot {
+  width: 6px;
+  height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--green-400);
+  animation: typingBounce 1.4s infinite;
+}
+
+.typingDot:nth-child(2) { animation-delay: 0.2s; }
+.typingDot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingBounce {
+  0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+  30% { transform: translateY(-6px); opacity: 1; }
+}
+
+.typingLabel {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+/* ─── Input Area ───────────────────────────────────────────── */
+.inputArea {
+  flex-shrink: 0;
+  border-top: 1px solid var(--border-default);
+  background: var(--bg-elevated);
+}
+
+.errorBar {
+  padding: var(--space-2) var(--space-4);
+  background: rgba(232, 84, 84, 0.1);
+  color: var(--color-error);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  border-bottom: 1px solid rgba(232, 84, 84, 0.2);
+}
+
+/* ─── Compact Mode (for widget popup) ──────────────────────── */
+.compact {
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-xl);
+}
+
+.compact .messagesArea {
+  max-height: 400px;
+}

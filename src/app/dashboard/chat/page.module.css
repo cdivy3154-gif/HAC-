@@ -1,0 +1,66 @@
+/* ═══════════════════════════════════════════════════════════════
+   Full Chat Page
+   ═══════════════════════════════════════════════════════════════ */
+
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  height: calc(100vh - var(--navbar-height) - var(--space-12));
+  animation: fadeInUp 500ms var(--ease-out-expo);
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Header ───────────────────────────────────────────────── */
+.header { flex-shrink: 0; }
+
+.title {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 800;
+  color: var(--text-primary);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  letter-spacing: var(--tracking-tight);
+}
+
+.titleIcon { font-size: 1.3rem; }
+
+.subtitle {
+  font-size: var(--text-sm);
+  color: var(--text-secondary);
+  margin: var(--space-1) 0 0;
+}
+
+.prompt {
+  font-family: var(--font-mono);
+  color: var(--green-400);
+  font-weight: 600;
+}
+
+/* ─── Chat Container ───────────────────────────────────────── */
+.chatContainer {
+  flex: 1;
+  min-height: 0;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.chatContainer > * {
+  height: 100%;
+}
+
+/* ─── Responsive ───────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .page {
+    height: calc(100vh - var(--navbar-height) - var(--bottom-nav-height) - var(--space-8));
+  }
+
+  .title { font-size: var(--text-xl); }
+}

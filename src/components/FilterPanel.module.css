@@ -1,0 +1,261 @@
+/* ═══════════════════════════════════════════════════════════════
+   FilterPanel — Hackathon Filters
+   ═══════════════════════════════════════════════════════════════ */
+
+.mobileToggle {
+  display: none;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-glass);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  color: var(--text-secondary);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 200ms;
+}
+
+.mobileToggle:hover { border-color: var(--green-400); color: var(--green-400); }
+
+.filterBadge {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 1px 6px;
+  background: var(--green-400);
+  color: var(--text-on-green);
+  border-radius: var(--radius-full);
+}
+
+/* ─── Panel ────────────────────────────────────────────────── */
+.panel {
+  width: 260px;
+  flex-shrink: 0;
+  background: var(--bg-glass);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  max-height: calc(100vh - var(--navbar-height) - var(--space-12));
+  overflow-y: auto;
+  position: sticky;
+  top: calc(var(--navbar-height) + var(--space-6));
+}
+
+.panelHidden { display: none; }
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.panelTitle {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.clearBtn {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--color-error);
+  cursor: pointer;
+  padding: 2px 8px;
+  border-radius: var(--radius-sm);
+  transition: all 200ms;
+}
+
+.clearBtn:hover { background: rgba(232, 84, 84, 0.1); }
+
+/* ─── Filter Groups ────────────────────────────────────────── */
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.groupLabel {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-muted);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* ─── Select Input ─────────────────────────────────────────── */
+.selectInput {
+  padding: var(--space-2) var(--space-3);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  cursor: pointer;
+  outline: none;
+  transition: border-color 200ms;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23484F58' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 28px;
+}
+
+.selectInput:focus {
+  border-color: var(--green-400);
+  box-shadow: var(--green-glow-sm);
+}
+
+.selectInput option {
+  background: var(--bg-surface);
+  color: var(--text-primary);
+}
+
+/* ─── Chips ────────────────────────────────────────────────── */
+.chipGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.chip {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-default);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 200ms;
+  white-space: nowrap;
+}
+
+.chip:hover {
+  border-color: var(--border-strong);
+  background: var(--bg-hover);
+}
+
+.chipActive {
+  background: var(--bg-green-subtle);
+  color: var(--green-400);
+  border-color: var(--border-green);
+}
+
+.chipActive:hover {
+  background: var(--bg-green-subtle);
+  color: var(--green-400);
+}
+
+/* ─── Toggle Switch ────────────────────────────────────────── */
+.toggleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.toggleLabel {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.toggle {
+  width: 40px;
+  height: 22px;
+  border-radius: var(--radius-full);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  position: relative;
+  cursor: pointer;
+  transition: all 250ms var(--ease-in-out);
+  flex-shrink: 0;
+}
+
+.toggle:hover { border-color: var(--border-strong); }
+
+.toggleOn {
+  background: var(--green-400);
+  border-color: var(--green-400);
+}
+
+.toggleThumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-full);
+  background: white;
+  transition: transform 250ms var(--ease-out-expo);
+  box-shadow: var(--shadow-sm);
+}
+
+.toggleOn .toggleThumb {
+  transform: translateX(18px);
+}
+
+/* ─── Tag Cloud ────────────────────────────────────────────── */
+.tagCloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tagChip {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-tertiary);
+  cursor: pointer;
+  transition: all 200ms;
+}
+
+.tagChip:hover {
+  border-color: var(--border-strong);
+  color: var(--text-secondary);
+}
+
+.tagActive {
+  background: var(--bg-green-subtle);
+  color: var(--green-400);
+  border-color: var(--border-green);
+}
+
+/* ─── Responsive ───────────────────────────────────────────── */
+@media (max-width: 1023px) {
+  .mobileToggle { display: flex; }
+
+  .panel {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 300px;
+    max-height: 100vh;
+    border-radius: 0;
+    z-index: var(--z-modal);
+    border-left: 1px solid var(--border-default);
+    border-right: none;
+    animation: slideInRight 300ms var(--ease-out-expo);
+  }
+
+  .panelHidden { display: none; }
+
+  @keyframes slideInRight {
+    from { transform: translateX(100%); }
+    to { transform: translateX(0); }
+  }
+}

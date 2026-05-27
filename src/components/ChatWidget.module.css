@@ -1,0 +1,197 @@
+/* ═══════════════════════════════════════════════════════════════
+   ChatWidget — Floating Chat Bubble
+   ═══════════════════════════════════════════════════════════════ */
+
+.widget {
+  position: fixed;
+  bottom: var(--space-6);
+  right: var(--space-6);
+  z-index: var(--z-modal);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-3);
+}
+
+/* ─── Floating Action Button ───────────────────────────────── */
+.fab {
+  width: 56px;
+  height: 56px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, var(--green-500), var(--green-400));
+  color: var(--text-on-green);
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 300ms var(--ease-out-expo);
+  box-shadow:
+    0 4px 20px rgba(59, 234, 126, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.fab:hover {
+  transform: scale(1.08);
+  box-shadow:
+    0 6px 28px rgba(59, 234, 126, 0.4),
+    0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.fab:active { transform: scale(0.95); }
+
+.fabActive {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  box-shadow: var(--shadow-lg);
+}
+
+.fabActive:hover {
+  box-shadow: var(--shadow-xl);
+}
+
+.fabIcon {
+  transition: transform 300ms var(--ease-out-expo);
+  line-height: 1;
+}
+
+.fabActive .fabIcon {
+  font-size: var(--text-lg);
+  color: var(--text-secondary);
+}
+
+/* ─── Pulse Dot ────────────────────────────────────────────── */
+.pulseDot {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 10px;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background: var(--green-400);
+  border: 2px solid var(--bg-surface);
+  animation: fabPulse 2s infinite;
+}
+
+.fabActive .pulseDot { display: none; }
+
+@keyframes fabPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(59, 234, 126, 0.5); }
+  50% { box-shadow: 0 0 0 6px rgba(59, 234, 126, 0); }
+}
+
+/* ─── Popup Window ─────────────────────────────────────────── */
+.popup {
+  width: 380px;
+  height: 520px;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.4),
+    0 4px 16px rgba(0, 0, 0, 0.2);
+  animation: popupSlideIn 300ms var(--ease-out-expo);
+}
+
+@keyframes popupSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.popupHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border-default);
+  flex-shrink: 0;
+}
+
+.popupTitle {
+  font-family: var(--font-mono);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.popupActions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.expandBtn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: all 200ms;
+}
+
+.expandBtn:hover {
+  color: var(--green-400);
+  background: var(--bg-glass-green);
+}
+
+.closeBtn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 200ms;
+}
+
+.closeBtn:hover {
+  color: var(--color-error);
+  background: rgba(232, 84, 84, 0.1);
+}
+
+/* The ChatWindow inside the popup */
+.popup > :last-child {
+  flex: 1;
+  border: none;
+  border-radius: 0;
+}
+
+/* ─── Responsive ───────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .widget {
+    bottom: calc(var(--bottom-nav-height) + var(--space-4));
+    right: var(--space-4);
+  }
+
+  .fab {
+    width: 48px;
+    height: 48px;
+    font-size: 1.3rem;
+  }
+
+  .popup {
+    width: calc(100vw - var(--space-8));
+    height: 60vh;
+    position: fixed;
+    bottom: calc(var(--bottom-nav-height) + var(--space-4) + 56px);
+    right: var(--space-4);
+  }
+}
