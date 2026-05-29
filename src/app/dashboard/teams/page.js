@@ -5,10 +5,12 @@ import Link from "next/link";
 import SearchBar from "@/components/SearchBar";
 import TeamCard from "@/components/TeamCard";
 import TeamForm from "@/components/TeamForm";
-import { MOCK_TEAMS } from "@/lib/mockData";
+import MyTeamCard from "@/components/MyTeamCard";
+import { MOCK_TEAMS, MY_TEAMS } from "@/lib/mockData";
 import styles from "./page.module.css";
 
 export default function TeamsPage() {
+  const [activeTab, setActiveTab] = useState("browse"); // browse | myteams
   const [search, setSearch] = useState("");
   const [filterOpen, setFilterOpen] = useState("all"); // all, open, closed
   const [showCreateForm, setShowCreateForm] = useState(false);
@@ -39,6 +41,11 @@ export default function TeamsPage() {
 
     return result;
   }, [search, filterOpen]);
+
+  const totalPending = MY_TEAMS.reduce(
+    (sum, t) => sum + (t.join_requests?.filter((r) => r.status === "pending").length || 0),
+    0
+  );
 
   function handleJoinClick(team) {
     setJoinToast(`Request sent to join "${team.name}"! 🐴 The leader will review your profile.`);
@@ -81,6 +88,25 @@ export default function TeamsPage() {
         </button>
       </div>
 
+      {/* Tab Switcher */}
+      <div className={styles.tabBar}>
+        <button
+          className={`${styles.tab} ${activeTab === "browse" ? styles.tabActive : ""}`}
+          onClick={() => setActiveTab("browse")}
+        >
+          🔍 Browse Teams
+        </button>
+        <button
+          className={`${styles.tab} ${activeTab === "myteams" ? styles.tabActive : ""}`}
+          onClick={() => setActiveTab("myteams")}
+        >
+          👑 My Teams
+          {totalPending > 0 && (
+            <span className={styles.tabBadge}>{totalPending}</span>
+          )}
+        </button>
+      </div>
+
       {/* Create Team Form (expandable) */}
       {showCreateForm && (
         <div className={styles.createFormWrapper}>
@@ -91,53 +117,82 @@ export default function TeamsPage() {
         </div>
       )}
 
-      {/* Search + Filters */}
-      <div className={styles.controls}>
-        <div className={styles.searchWrapper}>
-          <SearchBar
-            value={search}
-            onChange={setSearch}
-            placeholder="search teams, skills, hackathons..."
-            resultCount={filtered.length}
-          />
-        </div>
-        <div className={styles.statusFilter}>
-          {["all", "open", "closed"].map((s) => (
-            <button
-              key={s}
-              className={`${styles.filterChip} ${filterOpen === s ? styles.filterActive : ""}`}
-              onClick={() => setFilterOpen(s)}
-            >
-              {s === "all" ? "All" : s === "open" ? "🟢 Open" : "🔴 Closed"}
-            </button>
-          ))}
-        </div>
-      </div>
+      {/* ─── Browse Tab ─────────────────────────────────────── */}
+      {activeTab === "browse" && (
+        <>
+          {/* Search + Filters */}
+          <div className={styles.controls}>
+            <div className={styles.searchWrapper}>
+              <SearchBar
+                value={search}
+                onChange={setSearch}
+                placeholder="search teams, skills, hackathons..."
+                resultCount={filtered.length}
+              />
+            </div>
+            <div className={styles.statusFilter}>
+              {["all", "open", "closed"].map((s) => (
+                <button
+                  key={s}
+                  className={`${styles.filterChip} ${filterOpen === s ? styles.filterActive : ""}`}
+                  onClick={() => setFilterOpen(s)}
+                >
+                  {s === "all" ? "All" : s === "open" ? "🟢 Open" : "🔴 Closed"}
+                </button>
+              ))}
+            </div>
+          </div>
 
-      {/* Teams Grid */}
-      {filtered.length === 0 ? (
-        <div className={styles.emptyState}>
-          <span className={styles.emptyIcon}>👥</span>
-          <h3 className={styles.emptyTitle}>No teams found</h3>
-          <p className={styles.emptyText}>
-            Try different search terms, or create your own team!
-          </p>
-          <button className={styles.createBtnAlt} onClick={() => setShowCreateForm(true)}>
-            + Create a Team
-          </button>
-        </div>
-      ) : (
-        <div className={styles.grid}>
-          {filtered.map((team) => (
-            <Link
-              key={team.id}
-              href={`/dashboard/teams/${team.id}`}
-              className={styles.cardLink}
-            >
-              <TeamCard team={team} onJoinClick={handleJoinClick} />
-            </Link>
-          ))}
-        </div>
+          {/* Teams Grid */}
+          {filtered.length === 0 ? (
+            <div className={styles.emptyState}>
+              <span className={styles.emptyIcon}>👥</span>
+              <h3 className={styles.emptyTitle}>No teams found</h3>
+              <p className={styles.emptyText}>
+                Try different search terms, or create your own team!
+              </p>
+              <button className={styles.createBtnAlt} onClick={() => setShowCreateForm(true)}>
+                + Create a Team
+              </button>
+            </div>
+          ) : (
+            <div className={styles.grid}>
+              {filtered.map((team) => (
+                <Link
+                  key={team.id}
+                  href={`/dashboard/teams/${team.id}`}
+                  className={styles.cardLink}
+                >
+                  <TeamCard team={team} onJoinClick={handleJoinClick} />
+                </Link>
+              ))}
+            </div>
+          )}
+        </>
+      )}
+
+      {/* ─── My Teams Tab ───────────────────────────────────── */}
+      {activeTab === "myteams" && (
+        <>
+          {MY_TEAMS.length === 0 ? (
+            <div className={styles.emptyState}>
+              <span className={styles.emptyIcon}>👑</span>
+              <h3 className={styles.emptyTitle}>No teams yet</h3>
+              <p className={styles.emptyText}>
+                Create your first team and start recruiting!
+              </p>
+              <button className={styles.createBtnAlt} onClick={() => setShowCreateForm(true)}>
+                + Create a Team
+              </button>
+            </div>
+          ) : (
+            <div className={styles.myTeamsList}>
+              {MY_TEAMS.map((team) => (
+                <MyTeamCard key={team.id} team={team} />
+              ))}
+            </div>
+          )}
+        </>
       )}
     </div>
   );

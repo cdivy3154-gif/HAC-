@@ -1,0 +1,107 @@
+/* ═══════════════════════════════════════════════════════════════
+   SkillTags — Green Pill Tag Editor
+   ═══════════════════════════════════════════════════════════════ */
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.tagsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: var(--radius-full);
+  background: var(--bg-green-subtle);
+  color: var(--green-400);
+  border: 1px solid var(--border-green);
+  transition: all 200ms;
+}
+
+.editable {
+  padding-right: 6px;
+}
+
+.removeBtn {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  font-size: 9px;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 200ms;
+}
+
+.removeBtn:hover {
+  background: rgba(232, 84, 84, 0.15);
+  color: var(--color-error);
+}
+
+.empty {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+/* ─── Input Area ───────────────────────────────────────────── */
+.inputArea {
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  outline: none;
+  transition: border-color 200ms, box-shadow 200ms;
+}
+
+.input:focus {
+  border-color: var(--green-400);
+  box-shadow: var(--green-glow-sm);
+}
+
+.input::placeholder { color: var(--text-muted); }
+
+.suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: var(--space-2);
+}
+
+.suggestBtn {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  border: 1px dashed var(--border-default);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 200ms;
+}
+
+.suggestBtn:hover {
+  border-style: solid;
+  border-color: var(--green-400);
+  color: var(--green-400);
+  background: var(--bg-green-subtle);
+}
