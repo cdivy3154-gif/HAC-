@@ -15,8 +15,8 @@ const NAV_ITEMS = [
 ];
 
 const SECONDARY_ITEMS = [
-  { icon: "👤", label: "Profile", href: "/dashboard/profile", enabled: false },
-  { icon: "⚙️", label: "Settings", href: "/dashboard/settings", enabled: false },
+  { icon: "👤", label: "Profile", href: "/dashboard/profile", enabled: true },
+  { icon: "⚙️", label: "Settings", href: "/dashboard/settings", enabled: true },
   { icon: "🔔", label: "Notifications", href: "/dashboard/notifications", enabled: false },
 ];
 
